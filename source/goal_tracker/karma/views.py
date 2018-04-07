@@ -28,15 +28,17 @@ def create_goal(request):
 				tag = tag.lower()
 				qs = Tag.objects.filter(tag_name=tag)
 				if qs.exists():
+					#increment goal counter
 					continue
-				t = Tag()
-				t.tag_name = tag
-				t.save()
-				print tag
-				tg = TagGoal()
-				tg.goal = goal
-				tg.tag = t
-				tg.save()
+				else:
+					t = Tag()
+					t.tag_name = tag
+					t.save()
+					tg = TagGoal()
+					tg.goal = goal
+					tg.tag = t
+					tg.save()
+					#goal counter = 1
 				
 			tmpl_vars = {}
 			return redirect('index')

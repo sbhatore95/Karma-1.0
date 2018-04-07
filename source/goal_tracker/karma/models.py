@@ -50,10 +50,23 @@ class User(AbstractBaseUser):
 	active = models.BooleanField(default=True)
 	staff = models.BooleanField(default=False) 
 	admin = models.BooleanField(default=False) # a superuser
-	# notice the absence of a "Password field", that's built in.
 	objects = UserManager()
 	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = [] # Email & Password are required by default.
+
+	user_name = models.CharField(max_length=20, default='user')
+	bio = models.CharField(max_length=500, blank=True)
+	Gender = (
+		('M', 'Male'),
+		('F', 'Female'),
+		('O', 'Other'),
+	)
+	gender =  models.CharField(max_length=1, choices=Gender, default='M')
+
+	# birth_date = models.DateField(blank=True)
+	join_date = models.DateTimeField(default=datetime.now())
+	pic_url = models.CharField(max_length=200, blank=True)
+
+	REQUIRED_FIELDS = [] 
 
 	def get_full_name(self):
 		return self.email
@@ -61,7 +74,7 @@ class User(AbstractBaseUser):
 	def get_short_name(self):
 		return self.email
 
-	def __str__(self):              # __unicode__ on Python 2
+	def __str__(self):
 		return self.email
 
 	def has_perm(self, perm, obj=None):
@@ -95,9 +108,21 @@ class TagGoal(models.Model):
 	tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
 	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)
 
+class GoalFollowing(models.Model):
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
+	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)
+
+class ProjectFollowing(models.Model):
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
+	project = models.ForeignKey('Project', on_delete=models.CASCADE)
+
+class UserFollowing(models.Model):
+	user = models.ForeignKey('User', related_name='user', on_delete=models.CASCADE)
+	user2 = models.ForeignKey('User', related_name='user2', on_delete=models.CASCADE)
+
 class Project(models.Model):
 	goal = models.ForeignKey('Goal', on_delete=models.PROTECT)
-	#user
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
 
 	project_title = models.CharField(max_length=200)
 	project_description = models.CharField(max_length=500)
@@ -114,19 +139,19 @@ class Progress(models.Model):
 	created_at = models.DateTimeField(default=datetime.now())
 
 class CommentOnGoal(models.Model):
-	#user
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
 	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)
 	content = models.CharField(max_length=250)
 	created_at = models.DateTimeField(default=datetime.now())
 
 class CommentOnProject(models.Model):
-	#user
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
 	project = models.ForeignKey('Project', on_delete=models.CASCADE)
 	content = models.CharField(max_length=250)
 	created_at = models.DateTimeField(default=datetime.now())
 
 class CommentOnProgress(models.Model):
-	#user
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
 	progress = models.ForeignKey('Progress', on_delete=models.CASCADE)
 	content = models.CharField(max_length=250)
 	created_at = models.DateTimeField(default=datetime.now())
