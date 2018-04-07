@@ -113,7 +113,7 @@ def create_project(request):
 	else:
 		form = CreateProjectForm()
 
-	return render(request, 'create_project.html', {'form': form})
+	return render(request, 'create_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
 
 def view_goals(request):
 	tmpl_vars = {'goal_list': Goal.objects.all()}

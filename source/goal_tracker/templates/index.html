@@ -1,3 +1,7 @@
+{% extends 'blank.html' %}
+
+{% block content %}
+
 <b>It works</b>
 
 {% if is_authenticated %}
@@ -7,3 +11,5 @@
 {% endif %}
 
 {{user}}
+
+{% endblock %}

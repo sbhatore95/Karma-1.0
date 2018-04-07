@@ -1,3 +1,9 @@
+{% extends 'blank.html' %}
+
+{% block content %}
+
 {% for g in goal_list %}
-<a href="{% url 'goal_detail' g.id %}">{{g.goal_title}}</a>
+<a href="{% url 'goal_detail' g.id %}">{{g.goal_title}}</a></br>
 {% endfor %}
+
+{% endblock %}
