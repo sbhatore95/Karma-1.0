@@ -103,6 +103,8 @@ class Goal(models.Model):
 	goal_title = models.CharField(max_length=200)
 	goal_description = models.CharField(max_length=500)
 	created_at = models.DateTimeField(default=datetime.now()) #give default value??
+	def __str__(self):
+		return self.goal_title
 
 class TagGoal(models.Model):
 	tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
@@ -128,8 +130,7 @@ class Project(models.Model):
 	project_description = models.CharField(max_length=500)
 	cover_pic_url = models.CharField(max_length=250)
 	status = models.IntegerField() #what is this
-	confidentiality = models.IntegerField(default=0) # 0-private, 1-public
-
+	isPublic = models.BooleanField(default=False) 
 	created_at = models.DateTimeField(default=datetime.now())
 
 class Progress(models.Model):

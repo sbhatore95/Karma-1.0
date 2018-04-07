@@ -2,7 +2,21 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import User, Goal
+from .models import *
+
+
+class CreateProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('goal', 'project_title', 'project_description', 'isPublic')
+
+    def clean_goal_title(self):
+        title = self.cleaned_data.get('goal_title')
+        if title == '':
+            raise ValidationError('Empty title error message')
+        return title
+
 
 class CreateGoalForm(forms.ModelForm):
 
@@ -21,6 +35,13 @@ class CreateGoalForm(forms.ModelForm):
             raise forms.ValidationError("email is taken")
         return title
 
+
+class LoginForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('email',)
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

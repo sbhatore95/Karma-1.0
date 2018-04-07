@@ -1,1 +1,9 @@
 <b>It works</b>
+
+{% if is_authenticated %}
+<a href="{% url 'logout_user' %}">Logout</a>
+{% else %}
+<a href="{% url 'login_user' %}">LogIn</a>
+{% endif %}
+
+{{user}}
