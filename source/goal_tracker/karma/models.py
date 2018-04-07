@@ -6,7 +6,12 @@ from django.db import models
 from django.contrib.auth.models import (
 	BaseUserManager, AbstractBaseUser
 )
+
+from datetime import datetime
 # Create your models here.
+
+
+#FUTURE BUG = Solve date issue http://paltman.com/a-default-bug-in-django/
 
 class UserManager(BaseUserManager):
 	def create_user(self, email, password=None):
@@ -84,7 +89,7 @@ class Tag(models.Model):
 class Goal(models.Model):
 	goal_title = models.CharField(max_length=200)
 	goal_description = models.CharField(max_length=500)
-	created_at = models.DateTimeField() #give default value??
+	created_at = models.DateTimeField(default=datetime.now()) #give default value??
 
 class TagGoal(models.Model):
 	tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
@@ -100,28 +105,28 @@ class Project(models.Model):
 	status = models.IntegerField() #what is this
 	confidentiality = models.IntegerField(default=0) # 0-private, 1-public
 
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(default=datetime.now())
 
 class Progress(models.Model):
 	project = models.ForeignKey('Project', on_delete=models.CASCADE)
 
 	progress_description = models.CharField(max_length=500)
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(default=datetime.now())
 
 class CommentOnGoal(models.Model):
 	#user
 	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)
 	content = models.CharField(max_length=250)
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(default=datetime.now())
 
 class CommentOnProject(models.Model):
 	#user
 	project = models.ForeignKey('Project', on_delete=models.CASCADE)
 	content = models.CharField(max_length=250)
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(default=datetime.now())
 
 class CommentOnProgress(models.Model):
 	#user
 	progress = models.ForeignKey('Progress', on_delete=models.CASCADE)
 	content = models.CharField(max_length=250)
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(default=datetime.now())

@@ -2,7 +2,24 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import User
+from .models import User, Goal
+
+class CreateGoalForm(forms.ModelForm):
+
+    taglist = forms.CharField(label='Tags of Goal', max_length=100)
+
+    class Meta:
+        model = Goal
+        fields = ('goal_title', 'goal_description', )
+
+    def clean_goal_title(self):
+        title = self.cleaned_data.get('goal_title')
+        if title == '':
+            raise ValidationError('Empty title error message')
+        qs = Goal.objects.filter(goal_title=title)
+        if qs.exists():
+            raise forms.ValidationError("email is taken")
+        return title
 
 
 class RegisterForm(forms.ModelForm):
