@@ -13,4 +13,5 @@ urlpatterns = [
     url('projects/', views.view_projects, name='view_projects'),
     url('tags/', views.view_tags, name='view_tags'),
     url('goal/(?P<goal_id>\d+)/$', views.goal_detail, name='goal_detail'),
+    url('project/(?P<project_id>\d+)/$', views.project_detail, name='project_detail'),
 ]

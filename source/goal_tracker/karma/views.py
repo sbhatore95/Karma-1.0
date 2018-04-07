@@ -123,6 +123,10 @@ def goal_detail(request, goal_id):
 	goal = get_object_or_404(Goal, pk=goal_id)
 	return render(request, 'goal_detail.html', {'goal': goal})
 
+def project_detail(request, project_id):
+	project = get_object_or_404(Project, pk=project_id)
+	return render(request, 'project_detail.html', {'project': project})
+
 def view_projects(request):
 	tmpl_vars = {'project_list': Project.objects.all()}
 	return render(request, 'projects.html', tmpl_vars)

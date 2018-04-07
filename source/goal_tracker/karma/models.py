@@ -128,8 +128,8 @@ class Project(models.Model):
 
 	project_title = models.CharField(max_length=200)
 	project_description = models.CharField(max_length=500)
-	cover_pic_url = models.CharField(max_length=250)
-	status = models.IntegerField() #what is this
+	cover_pic_url = models.CharField(max_length=250, default='')
+	# status = models.IntegerField() #what is this
 	isPublic = models.BooleanField(default=False) 
 	created_at = models.DateTimeField(default=datetime.now())
 
