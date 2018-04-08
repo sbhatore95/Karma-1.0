@@ -4,6 +4,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from .models import *
 
+from django.contrib.auth import authenticate
+
 
 class CreateProjectForm(forms.ModelForm):
 
@@ -41,13 +43,30 @@ class EditProfileForm(forms.ModelForm):
         model = User
         fields = ('user_name', 'bio', 'gender')
 
-
-class LoginForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
+class AddProgressForm(forms.ModelForm):
 
     class Meta:
-        model = User
-        fields = ('email',)
+        model = Progress
+        fields = ('progress_description',)
+
+class EditProgressForm(forms.ModelForm):
+
+    class Meta:
+        model = Progress
+        fields = ('progress_description',)
+
+
+class LoginForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.CharField()
+
+    def clean_password(self):
+        username = self.data['email']
+        password = self.data['password']
+        user = authenticate(email=username, password=password)
+        if user is None:
+            raise forms.ValidationError('Incorrect password')
+        return password
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

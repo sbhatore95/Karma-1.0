@@ -24,6 +24,7 @@
       <div class="card-body">
         <form method="post">
     	{% csrf_token %}
+      {{form.errors}}
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <!-- <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email"> -->

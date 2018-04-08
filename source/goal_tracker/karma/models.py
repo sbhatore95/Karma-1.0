@@ -136,6 +136,9 @@ class Project(models.Model):
 	isPublic = models.BooleanField(default=False) 
 	created_at = models.DateTimeField(default=datetime.now())
 
+	def progresses(self):
+		return Progress.objects.all().filter(project=self)
+
 class Progress(models.Model):
 	project = models.ForeignKey('Project', on_delete=models.CASCADE)
 

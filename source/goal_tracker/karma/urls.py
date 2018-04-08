@@ -17,4 +17,6 @@ urlpatterns = [
     url('tags/', views.view_tags, name='view_tags'),
     url('goal/(?P<goal_id>\d+)/$', views.goal_detail, name='goal_detail'),
     url('project/(?P<project_id>\d+)/$', views.project_detail, name='project_detail'),
+    url('add_progress/(?P<project_id>\d+)/$', views.add_progress, name='add_progress'),
+    url('edit_progress/(?P<progress_id>\d+)/$', views.edit_progress, name='edit_progress'),
 ]

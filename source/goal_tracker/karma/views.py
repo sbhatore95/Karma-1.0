@@ -43,14 +43,12 @@ def login_user(request):
 
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
-		username = form.data['email']
-		password = form.data['password']
-		user = authenticate(request, email=username, password=password)
-		if user is not None:
+		if form.is_valid():
+			username = form.data['email']
+			password = form.data['password']
+			user = authenticate(request, email=username, password=password)
 			login(request, user)
 			return redirect('index')
-		else:
-			raise AuthenticationError('Incorrect email or password')
 	else :
 		form = LoginForm()
 	return render(request, 'login.html', {'form': form})
@@ -138,7 +136,40 @@ def create_project(request):
 
 	return render(request, 'create_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
 
+@login_required(login_url='/karma/login/')
+def add_progress(request, project_id):
+	project = Project.objects.all().filter(id=project_id)[0]
+	if request.user != project.user:
+		raise Exception("AuthenticationError")
 
+	if request.method == 'POST':
+		form = AddProgressForm(request.POST)
+		if form.is_valid():
+			progress = form.save(commit=False)
+			progress.project = project
+			progress.save()
+			return redirect('project_detail', project_id)
+	else:
+		form = AddProgressForm()
+	return render(request, 'add_progress.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+
+@login_required(login_url='/karma/login/')
+def edit_progress(request, progress_id):
+	progress = Progress.objects.all().filter(id=progress_id)[0]
+	project = progress.project
+	if request.user != project.user:
+		raise Exception("AuthenticationError")
+
+	if request.method == 'POST':
+		form = EditProgressForm(request.POST, instance=progress)
+		if form.is_valid():
+			progress = form.save(commit=False)
+			progress.project = project
+			progress.save()
+			return redirect('project_detail', project.id)
+	else:
+		form = EditProgressForm()
+	return render(request, 'edit_progress.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
 
 
 def view_goals(request):
@@ -153,7 +184,9 @@ def project_detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
 	if not (project.isPublic or project.user == request.user):
 		raise Http404
-	return render(request, 'project_detail.html', {'project': project, 'is_authenticated': request.user.is_authenticated})
+	progress = project.progresses()
+	print progress
+	return render(request, 'project_detail.html', {'project': project, 'progress': progress, 'is_authenticated': request.user.is_authenticated})
 
 def view_projects(request):
 	tmpl_vars = {'project_list': Project.objects.all().filter(isPublic=True), 'is_authenticated': request.user.is_authenticated}
@@ -165,11 +198,12 @@ def register(request):
 		form = RegisterForm(request.POST)
 		if form.is_valid():
 			user = form.save(commit=False)
-			username = form.cleaned_data['email']
 			password = form.cleaned_data['password']
 			user.set_password(password)
 			user.save()
 			return redirect('index')
+		else:
+			print form.errors, len(form.errors)
 
 	else:
 		form = RegisterForm()

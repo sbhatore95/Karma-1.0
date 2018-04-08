@@ -7,4 +7,14 @@
 {{project.isPublic}} </br>
 {{project.created_at}} </br>
 
+<a href="{% url 'add_progress' project.id %}">Add Progress</a>
+</br>
+</br>
+
+{% for p in progress %}
+{{p.progress_description}}
+<a href="{% url 'edit_progress' p.id %}">Edit Progress</a>
+</br>
+{% endfor %}
+
 {% endblock %}

@@ -27,6 +27,7 @@
     	{% csrf_token %}
 
           <div class="form-group">
+            {{form.errors}}
             <label for="exampleInputName">Username</label>
             {{form.user_name}}
           </div>
@@ -42,7 +43,7 @@
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Confirm password</label>
-                {{form.password}}
+                {{form.password2}}
               </div>
             </div>
           </div>
