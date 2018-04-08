@@ -95,6 +95,9 @@ class User(AbstractBaseUser):
 	def is_active(self):
 		return self.active
 
+	def projects(self):
+		return Project.objects.all().filter(user=self)
+
 class Tag(models.Model):
 	tag_name = models.CharField(max_length=50)
 	goals = models.IntegerField(default=0)

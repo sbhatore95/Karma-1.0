@@ -7,7 +7,7 @@ from .forms import *
 
 from .models import Goal, Tag, TagGoal
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -102,6 +102,29 @@ def create_goal(request):
 	return render(request, 'create_goal.html', {'form': form})
 
 @login_required(login_url='/karma/login/')
+def view_profile(request):
+	return render(request, 'view_profile.html', {'user': request.user, 'is_authenticated': request.user.is_authenticated})
+
+
+@login_required(login_url='/karma/login/')
+def edit_profile(request):
+	if request.method == 'POST':
+		form = EditProfileForm(request.POST, instance=request.user)
+		if form.is_valid():
+			form.save()
+			return redirect('view_profile')
+	else:
+		form = EditProfileForm()
+
+	return render(request, 'edit_profile.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+
+
+
+@login_required(login_url='/karma/login/')
+def myprojects(request):
+	return render(request, 'myprojects.html', {'projects': request.user.projects(), 'is_authenticated': request.user.is_authenticated})
+
+@login_required(login_url='/karma/login/')
 def create_project(request):
 	if request.method == 'POST':
 		form = CreateProjectForm(request.POST)
@@ -115,6 +138,9 @@ def create_project(request):
 
 	return render(request, 'create_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
 
+
+
+
 def view_goals(request):
 	tmpl_vars = {'goal_list': Goal.objects.all()}
 	return render(request, 'goals.html', tmpl_vars)
@@ -125,13 +151,15 @@ def goal_detail(request, goal_id):
 
 def project_detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
-	return render(request, 'project_detail.html', {'project': project})
+	if not (project.isPublic or project.user == request.user):
+		raise Http404
+	return render(request, 'project_detail.html', {'project': project, 'is_authenticated': request.user.is_authenticated})
 
 def view_projects(request):
-	tmpl_vars = {'project_list': Project.objects.all()}
+	tmpl_vars = {'project_list': Project.objects.all().filter(isPublic=True), 'is_authenticated': request.user.is_authenticated}
 	return render(request, 'projects.html', tmpl_vars)
 
-
+@anonymous_required
 def register(request):
 	if request.method == 'POST':
 		form = RegisterForm(request.POST)

@@ -35,6 +35,12 @@ class CreateGoalForm(forms.ModelForm):
             raise forms.ValidationError("email is taken")
         return title
 
+class EditProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('user_name', 'bio', 'gender')
+
 
 class LoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

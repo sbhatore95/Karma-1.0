@@ -40,7 +40,7 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="{% url 'myprojects' %}">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">My Projects</span>
           </a>
@@ -52,10 +52,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="navbar.html">View Profile</a>
+              <a href="{% url 'view_profile' %}">View Profile</a>
             </li>
             <li>
-              <a href="cards.html">Edit Profile</a>
+              <a href="{% url 'edit_profile' %}">Edit Profile</a>
             </li>
           </ul>
         </li>
