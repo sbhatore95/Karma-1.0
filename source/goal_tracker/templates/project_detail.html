@@ -8,13 +8,31 @@
 {{project.created_at}} </br>
 
 <a href="{% url 'add_progress' project.id %}">Add Progress</a>
+<a href="{% url 'edit_project' project.id %}">Edit Project</a>
+</br>
+</br>
+
 </br>
 </br>
 
 {% for p in progress %}
-{{p.progress_description}}
+<b>{{p.progress_description}}</b>
 <a href="{% url 'edit_progress' p.id %}">Edit Progress</a>
+<a href="{% url 'commentprogress' p.id %}">Comment on Progress</a></br>
+{% for c in p.comments %}
+{{c.user.user_name}}
+{{c.content}}
 </br>
 {% endfor %}
+</br></br>
+{% endfor %}
+
+<h1> Comments </h1>
+{% for c in comments %}
+{{c.user.user_name}}
+{{c.content}}</br>
+{% endfor %}
+
+<a href="{% url 'commentproject' project.id %}">Comment</a>
 
 {% endblock %}

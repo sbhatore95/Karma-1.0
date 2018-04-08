@@ -137,6 +137,24 @@ def create_project(request):
 	return render(request, 'create_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
 
 @login_required(login_url='/karma/login/')
+def edit_project(request, project_id):
+	project = Project.objects.all().filter(id=project_id)[0]
+	if request.user != project.user:
+		raise Exception("AuthenticationError")
+
+	if request.method == 'POST':
+		form = EditProjectForm(request.POST, instance=project)
+		if form.is_valid():
+			project = form.save(commit=False)
+			project.user = request.user
+			project.save()
+			return redirect('project_detail', project_id)
+	else:
+		form = EditProjectForm()
+
+	return render(request, 'create_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+
+@login_required(login_url='/karma/login/')
 def add_progress(request, project_id):
 	project = Project.objects.all().filter(id=project_id)[0]
 	if request.user != project.user:
@@ -178,15 +196,17 @@ def view_goals(request):
 
 def goal_detail(request, goal_id):
 	goal = get_object_or_404(Goal, pk=goal_id)
-	return render(request, 'goal_detail.html', {'goal': goal})
+	comments = goal.comments()
+	return render(request, 'goal_detail.html', {'goal': goal, 'comments':comments,'is_authenticated': request.user.is_authenticated})
 
 def project_detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
 	if not (project.isPublic or project.user == request.user):
 		raise Http404
 	progress = project.progresses()
+	comments = project.comments()
 	print progress
-	return render(request, 'project_detail.html', {'project': project, 'progress': progress, 'is_authenticated': request.user.is_authenticated})
+	return render(request, 'project_detail.html', {'project': project, 'progress': progress, 'comments':comments, 'is_authenticated': request.user.is_authenticated})
 
 def view_projects(request):
 	tmpl_vars = {'project_list': Project.objects.all().filter(isPublic=True), 'is_authenticated': request.user.is_authenticated}
@@ -209,3 +229,66 @@ def register(request):
 		form = RegisterForm()
 
 	return render(request, 'register.html', {'form': form})
+
+@login_required(login_url='/karma/login/')
+def comment_goal(request, goal_id):
+	if request.method == 'POST':
+		form = CommentOnGoalForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.goal = Goal.objects.all().filter(id=goal_id)[0]
+			comment.user = request.user
+			comment.save()
+			return redirect('goal_detail', goal_id)
+		else:
+			print form.errors, len(form.errors)
+
+	else:
+		form = CommentOnGoalForm()
+
+	return render(request, 'commentgoal.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+
+@login_required(login_url='/karma/login/')
+def comment_project(request, project_id):
+	project = Project.objects.all().filter(id=project_id)[0]
+	if project.user != request.user and not project.isPublic:
+		raise Exception("AuthenticationError")
+
+	if request.method == 'POST':
+		form = CommentOnProjectForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.project = project
+			comment.user = request.user
+			comment.save()
+			return redirect('project_detail', project_id)
+		else:
+			print form.errors, len(form.errors)
+
+	else:
+		form = CommentOnProjectForm()
+
+	return render(request, 'commentproject.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+
+@login_required(login_url='/karma/login/')
+def comment_progress(request, progress_id):
+	progress = Progress.objects.all().filter(id=progress_id)[0]
+	project = progress.project
+	if project.user != request.user and not project.isPublic:
+		raise Exception("AuthenticationError")
+
+	if request.method == 'POST':
+		form = CommentOnProgressForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.progress = progress
+			comment.user = request.user
+			comment.save()
+			return redirect('project_detail', project.id)
+		else:
+			print form.errors, len(form.errors)
+
+	else:
+		form = CommentOnProgressForm()
+
+	return render(request, 'commentprogress.html', {'form': form, 'is_authenticated': request.user.is_authenticated})

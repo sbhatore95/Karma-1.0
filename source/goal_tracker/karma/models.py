@@ -109,6 +109,9 @@ class Goal(models.Model):
 	def __str__(self):
 		return self.goal_title
 
+	def comments(self):
+		return CommentOnGoal.objects.all().filter(goal=self)
+
 class TagGoal(models.Model):
 	tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
 	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)
@@ -139,11 +142,17 @@ class Project(models.Model):
 	def progresses(self):
 		return Progress.objects.all().filter(project=self)
 
+	def comments(self):
+		return CommentOnProject.objects.all().filter(project=self)
+
 class Progress(models.Model):
 	project = models.ForeignKey('Project', on_delete=models.CASCADE)
 
 	progress_description = models.CharField(max_length=500)
 	created_at = models.DateTimeField(default=datetime.now())
+
+	def comments(self):
+		return CommentOnProgress.objects.all().filter(progress=self)
 
 class CommentOnGoal(models.Model):
 	user = models.ForeignKey('User', on_delete=models.CASCADE)

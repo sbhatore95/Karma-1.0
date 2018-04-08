@@ -6,8 +6,40 @@ from .models import *
 
 from django.contrib.auth import authenticate
 
+class CommentOnGoalForm(forms.ModelForm):
+
+    class Meta:
+        model = CommentOnGoal
+        fields = ('content',)
+
+
+class CommentOnProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = CommentOnProject
+        fields = ('content',)
+
+
+class CommentOnProgressForm(forms.ModelForm):
+
+    class Meta:
+        model = CommentOnProgress
+        fields = ('content',)
+
 
 class CreateProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ('goal', 'project_title', 'project_description', 'isPublic')
+
+    def clean_goal_title(self):
+        title = self.cleaned_data.get('goal_title')
+        if title == '':
+            raise ValidationError('Empty title error message')
+        return title
+
+class EditProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project

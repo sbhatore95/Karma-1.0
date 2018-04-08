@@ -5,4 +5,12 @@
 {{goal.goal_title}} </br>
 {{goal.goal_description}} </br>
 {{goal.created_at}} </br>
+
+{% for c in comments %}
+{{c.user.user_name}}</br>
+{{c.content}}</br>
+</br>
+{% endfor %}
+
+<a href="{% url 'commentgoal' goal.id %}">Comment</a>
 {% endblock %}
