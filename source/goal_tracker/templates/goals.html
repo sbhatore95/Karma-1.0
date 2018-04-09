@@ -1,9 +1,18 @@
 {% extends 'blank.html' %}
 
 {% block content %}
-
-{% for g in goal_list %}
-<a href="{% url 'goal_detail' g.id %}">{{g.goal_title}}</a></br>
-{% endfor %}
+<h1>All Goals</h1>
+<table class="table">
+	<tr>
+		<td>Goal ID</td>
+		<td>Goal Title</td>
+	</tr>
+	<tr>
+	{% for g in goal_list %}
+		<td>{{g.id}}</td>
+		<td><a href="{% url 'goal_detail' g.id %}">{{g.goal_title}}</a></td></br>
+	</tr>
+	{% endfor %}
+</table>
 
 {% endblock %}
