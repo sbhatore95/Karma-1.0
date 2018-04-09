@@ -2,10 +2,16 @@
 
 {% block content %}
 
-{{project.project_title}} </br>
-{{project.project_description}} </br>
-{{project.isPublic}} </br>
-{{project.created_at}} </br>
+<h1>{{project.project_title}}</h1> </br>
+<p><b> Description : </b>{{project.project_description}}</p> </br>
+<p>Confidentiality :
+{% if project.isPublic %}
+<b>Public</b>
+{% else %}
+<b> Private </b>
+{% endif %}
+</p> </br>
+<p> <b> Created at : </b>{{project.created_at}}</p> </br>
 
 <a href="{% url 'add_progress' project.id %}">Add Progress</a>
 <a href="{% url 'edit_project' project.id %}">Edit Project</a>

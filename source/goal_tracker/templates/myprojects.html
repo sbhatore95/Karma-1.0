@@ -1,11 +1,24 @@
 {% extends 'blank.html' %}
 
 {% block content %}
+<h1>My Projects</h1>
 
-{% for p in projects %}
-<a href="{% url 'project_detail' p.id %}">{{p.project_title}}</a>
-</br>
-{% endfor %}
+<div class = 'container'>
+	<table class = "table">
+		<tr>
+			<td><b>Project ID</b></td>
+			<td><b>Project</b></td>
+			<td><b>Goal Name</b></td>
+		</tr>
+		{% for p in projects %}
+		<tr>
+			<td>{{p.id}}</td>
+			<td><a href="{% url 'project_detail' p.id %}">{{p.project_title}}</a></td>
+			<td>{{p.goal}}
+		</tr>
+		{% endfor %}
+	</table>
+</div>
 
 
 {% endblock %}
