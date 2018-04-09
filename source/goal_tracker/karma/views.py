@@ -65,7 +65,7 @@ def index(request):
 	return render(request, 'index.html', tmpl_vars)
 
 def view_tags(request):
-	tmpl_vars = {'tag_list': Tag.objects.all()}
+	tmpl_vars = {'tag_list': Tag.objects.all(), 'is_authenticated': request.user.is_authenticated}
 	return render(request, 'tags.html', tmpl_vars)
 
 
@@ -191,13 +191,20 @@ def edit_progress(request, progress_id):
 
 
 def view_goals(request):
-	tmpl_vars = {'goal_list': Goal.objects.all()}
+	tmpl_vars = {'goal_list': Goal.objects.all(), 'is_authenticated': request.user.is_authenticated}
 	return render(request, 'goals.html', tmpl_vars)
 
 def goal_detail(request, goal_id):
 	goal = get_object_or_404(Goal, pk=goal_id)
 	comments = goal.comments()
-	return render(request, 'goal_detail.html', {'goal': goal, 'comments':comments,'is_authenticated': request.user.is_authenticated})
+	followers = goal.followers()
+	total_followers = len(followers)
+	a = GoalFollowing.objects.all().filter(user=request.user, goal=goal)
+	if len(a):
+		isFollow = True
+	else:
+		isFollow = False
+	return render(request, 'goal_detail.html', {'isFollow':isFollow,'total_followers':total_followers, 'followers':followers,'goal': goal, 'comments':comments,'is_authenticated': request.user.is_authenticated})
 
 def project_detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
@@ -292,3 +299,19 @@ def comment_progress(request, progress_id):
 		form = CommentOnProgressForm()
 
 	return render(request, 'commentprogress.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+
+
+@login_required(login_url='/karma/login/')
+def follow_goal(request, goal_id):
+	a = GoalFollowing()
+	a.goal = Goal.objects.all().filter(id=goal_id)[0]
+	a.user = request.user
+	a.save()
+	return redirect(goal_detail, goal_id)
+
+@login_required(login_url='/karma/login/')
+def unfollow_goal(request, goal_id):
+	goal = Goal.objects.all().filter(id=goal_id)[0]
+	a = GoalFollowing.objects.all().filter(user=request.user, goal=goal)[0]
+	a.delete()
+	return redirect(goal_detail, goal_id)

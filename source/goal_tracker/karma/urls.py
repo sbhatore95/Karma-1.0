@@ -3,6 +3,8 @@ from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
+    url('unfollow_goal/(?P<goal_id>\d+)/$', views.unfollow_goal, name='unfollow_goal'),
+    url('follow_goal/(?P<goal_id>\d+)/$', views.follow_goal, name='follow_goal'),
     url('index/', views.index, name='index'),
     url('login/', views.login_user, name='login_user'),
     url('logout/', views.logout_user, name='logout_user'),
