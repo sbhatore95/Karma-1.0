@@ -1,9 +1,12 @@
 {% extends 'blank.html' %}
 
 {% block content %}
-
-{% for t in tag_list %}
-{{t.tag_name}}</br>
+<h1>Tags</h1>
+<table class="table">
+<tr>
+	{% for t in tag_list %}
+<td>{{t.tag_name}}</td></br>
+</tr>
 {% endfor %}
-
+</table>
 {% endblock %}
