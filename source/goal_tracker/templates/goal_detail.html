@@ -12,5 +12,11 @@
 </br>
 {% endfor %}
 
+<h3>Total followers : {{total_followers}}</br></h3>
+{% if isFollow %}
+<a href="{% url 'unfollow_goal' goal.id %}"><button>UnFollow</button></a>
+{% else %}
+<a href="{% url 'follow_goal' goal.id %}"><button>Follow</button></a>
+{% endif %}
 <a href="{% url 'commentgoal' goal.id %}">Comment</a>
 {% endblock %}

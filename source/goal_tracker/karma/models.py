@@ -112,6 +112,9 @@ class Goal(models.Model):
 	def comments(self):
 		return CommentOnGoal.objects.all().filter(goal=self)
 
+	def followers(self):
+		return GoalFollowing.objects.all().filter(goal=self)
+
 class TagGoal(models.Model):
 	tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
 	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)
