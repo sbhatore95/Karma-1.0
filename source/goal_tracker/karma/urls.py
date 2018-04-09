@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     url('unfollow_goal/(?P<goal_id>\d+)/$', views.unfollow_goal, name='unfollow_goal'),
     url('follow_goal/(?P<goal_id>\d+)/$', views.follow_goal, name='follow_goal'),
+    url('unfollow_project/(?P<project_id>\d+)/$', views.unfollow_project, name='unfollow_project'),
+    url('follow_project/(?P<project_id>\d+)/$', views.follow_project, name='follow_project'),
     url('index/', views.index, name='index'),
     url('login/', views.login_user, name='login_user'),
     url('logout/', views.logout_user, name='logout_user'),

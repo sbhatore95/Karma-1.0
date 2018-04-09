@@ -148,6 +148,9 @@ class Project(models.Model):
 	def comments(self):
 		return CommentOnProject.objects.all().filter(project=self)
 
+	def followers(self):
+		return ProjectFollowing.objects.all().filter(project=self)
+
 class Progress(models.Model):
 	project = models.ForeignKey('Project', on_delete=models.CASCADE)
 
