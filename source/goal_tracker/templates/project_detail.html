@@ -33,6 +33,13 @@
 </br></br>
 {% endfor %}
 
+<h3>Total followers : {{total_followers}}</br></h3>
+{% if isFollow %}
+<a href="{% url 'unfollow_project' project.id %}"><button>UnFollow</button></a>
+{% else %}
+<a href="{% url 'follow_project' project.id %}"><button>Follow</button></a>
+{% endif %}
+
 <h1> Comments </h1>
 {% for c in comments %}
 {{c.user.user_name}}

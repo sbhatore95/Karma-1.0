@@ -213,7 +213,14 @@ def project_detail(request, project_id):
 	progress = project.progresses()
 	comments = project.comments()
 	print progress
-	return render(request, 'project_detail.html', {'project': project, 'progress': progress, 'comments':comments, 'is_authenticated': request.user.is_authenticated})
+	followers = project.followers()
+	total_followers = len(followers)
+	a = ProjectFollowing.objects.all().filter(user=request.user, project=project)
+	if len(a):
+		isFollow = True
+	else:
+		isFollow = False
+	return render(request, 'project_detail.html', {'isFollow': isFollow, 'total_followers':total_followers,'project': project, 'progress': progress, 'comments':comments, 'is_authenticated': request.user.is_authenticated})
 
 def view_projects(request):
 	tmpl_vars = {'project_list': Project.objects.all().filter(isPublic=True), 'is_authenticated': request.user.is_authenticated}
@@ -315,3 +322,18 @@ def unfollow_goal(request, goal_id):
 	a = GoalFollowing.objects.all().filter(user=request.user, goal=goal)[0]
 	a.delete()
 	return redirect(goal_detail, goal_id)
+
+@login_required(login_url='/karma/login/')
+def follow_project(request, project_id):
+	a = ProjectFollowing()
+	a.project = Project.objects.all().filter(id=project_id)[0]
+	a.user = request.user
+	a.save()
+	return redirect(project_detail, project_id)
+
+@login_required(login_url='/karma/login/')
+def unfollow_project(request, project_id):
+	project = Project.objects.all().filter(id=project_id)[0]
+	a = ProjectFollowing.objects.all().filter(user=request.user, project=project)[0]
+	a.delete()
+	return redirect(project_detail, project_id)
