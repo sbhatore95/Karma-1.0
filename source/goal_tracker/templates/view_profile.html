@@ -1,10 +1,23 @@
 {% extends 'blank.html' %}
 
 {% block content %}
-
-{{ user.user_name }} </br>
-{{ user.gender }}</br>
-{{ user.bio }}</br>
-{{ user.email }}</br>
-
+<h1>Profile</h1>
+<table class="table">
+	<tr>
+		<td><b>User Name  </b></td>
+		<td>{{ user.user_name }}</td> </br>
+	</tr>
+	<tr>
+		<td><b>Gender  </b></td>
+		<td>{{ user.gender }}</td></br>
+	</tr>
+	<tr>
+		<td><b>Bio  </b></td>
+		<td>{{ user.bio }}</td></br>
+	</tr>
+	<tr>
+		<td><b>Email  </b></td>
+		<td>{{ user.email }}</td></br>
+	</tr>
+</table>
 {% endblock %}
