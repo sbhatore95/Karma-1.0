@@ -115,6 +115,9 @@ class Goal(models.Model):
 	def followers(self):
 		return GoalFollowing.objects.all().filter(goal=self)
 
+	def projects(self):
+		return Project.objects.all().filter(goal=self, isPublic=True)
+
 class TagGoal(models.Model):
 	tag = models.ForeignKey('Tag', on_delete=models.CASCADE)
 	goal = models.ForeignKey('Goal', on_delete=models.CASCADE)

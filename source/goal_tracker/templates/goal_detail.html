@@ -19,4 +19,11 @@
 <a href="{% url 'follow_goal' goal.id %}"><button>Follow</button></a>
 {% endif %}
 <a href="{% url 'commentgoal' goal.id %}">Comment</a>
+
+<h2>Projects</h2>
+{% for project in projects %}
+<a href="{% url 'project_detail' project.id %}">{{project.project_title}}</a>
+{% endfor %}
+
+
 {% endblock %}

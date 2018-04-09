@@ -199,12 +199,13 @@ def goal_detail(request, goal_id):
 	comments = goal.comments()
 	followers = goal.followers()
 	total_followers = len(followers)
+	projects = goal.projects()
 	a = GoalFollowing.objects.all().filter(user=request.user, goal=goal)
 	if len(a):
 		isFollow = True
 	else:
 		isFollow = False
-	return render(request, 'goal_detail.html', {'isFollow':isFollow,'total_followers':total_followers, 'followers':followers,'goal': goal, 'comments':comments,'is_authenticated': request.user.is_authenticated})
+	return render(request, 'goal_detail.html', {'projects':projects,'isFollow':isFollow,'total_followers':total_followers, 'followers':followers,'goal': goal, 'comments':comments,'is_authenticated': request.user.is_authenticated})
 
 def project_detail(request, project_id):
 	project = get_object_or_404(Project, pk=project_id)
