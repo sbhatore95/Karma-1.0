@@ -2,28 +2,39 @@
 
 {% block content %}
 
-{{goal.goal_title}} </br>
-{{goal.goal_description}} </br>
-{{goal.created_at}} </br>
+<h1>{{goal.goal_title}}</h1> </br>
+<p><b>Goal Description :</b> 	{{goal.goal_description}}</p> </br>
+<p><b>Created At :</b> {{goal.created_at}} </p> </br>
 
-{% for c in comments %}
-{{c.user.user_name}}</br>
-{{c.content}}</br>
-</br>
-{% endfor %}
-
-<h3>Total followers : {{total_followers}}</br></h3>
+<p><b>Followers :</b> {{total_followers}}</p>
 {% if isFollow %}
 <a href="{% url 'unfollow_goal' goal.id %}"><button>UnFollow</button></a>
 {% else %}
 <a href="{% url 'follow_goal' goal.id %}"><button>Follow</button></a>
 {% endif %}
 <a href="{% url 'commentgoal' goal.id %}">Comment</a>
+<p><b>Comments</b></p>
+{% for c in comments %}
+<i>{{c.user.user_name}}</i></br>
+{{c.content}}</br>
+</br>
+{% endfor %}
 
 <h2>Projects</h2>
+<table class="table">
+<tr>
+	<td>Project ID</td>
+	<td>Project Title</td>
+</tr>
 {% for project in projects %}
-<a href="{% url 'project_detail' project.id %}">{{project.project_title}}</a>
+<tr>
+	<td>{{project.id}}</td>
+	<td><a href="{% url 'project_detail' project.id %}">{{project.project_title}}</a></td>
+</tr>
+
 {% endfor %}
+</br>
+</table>
 
 
 {% endblock %}

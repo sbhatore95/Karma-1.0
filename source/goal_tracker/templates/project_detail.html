@@ -4,16 +4,21 @@
 
 <h1>{{project.project_title}}</h1> </br>
 <p><b> Description : </b>{{project.project_description}}</p> </br>
-<p>Confidentiality :
+<p><b>Confidentiality :</b>
 {% if project.isPublic %}
-<b>Public</b>
+Public
 {% else %}
-<b> Private </b>
+Private
 {% endif %}
 </p> </br>
 <p> <b> Created at : </b>{{project.created_at}}</p> </br>
-
-<a href="{% url 'add_progress' project.id %}">Add Progress</a>
+<p><b>Followers :</b> {{total_followers}}</br></p>
+{% if isFollow %}
+<a href="{% url 'unfollow_project' project.id %}"><button>UnFollow</button></a>
+{% else %}
+<a href="{% url 'follow_project' project.id %}"><button>Follow</button></a>
+{% endif %}</br></br>
+<a href="{% url 'add_progress' project.id %}">Add Progress </a>
 <a href="{% url 'edit_project' project.id %}">Edit Project</a>
 </br>
 </br>
@@ -22,27 +27,27 @@
 </br>
 
 {% for p in progress %}
-<b>{{p.progress_description}}</b>
+<h3>Progress {{p.id}}</h3><br>
+<table class="table">
+	
+<b>{{p.progress_description}}</b><br>
 <a href="{% url 'edit_progress' p.id %}">Edit Progress</a>
 <a href="{% url 'commentprogress' p.id %}">Comment on Progress</a></br>
 {% for c in p.comments %}
-{{c.user.user_name}}
+<i>{{c.user.user_name}}</i>
 {{c.content}}
 </br>
 {% endfor %}
 </br></br>
+</table>
 {% endfor %}
 
-<h3>Total followers : {{total_followers}}</br></h3>
-{% if isFollow %}
-<a href="{% url 'unfollow_project' project.id %}"><button>UnFollow</button></a>
-{% else %}
-<a href="{% url 'follow_project' project.id %}"><button>Follow</button></a>
-{% endif %}
+
+
 
 <h1> Comments </h1>
 {% for c in comments %}
-{{c.user.user_name}}
+<i>{{c.user.user_name}}</i>
 {{c.content}}</br>
 {% endfor %}
 
