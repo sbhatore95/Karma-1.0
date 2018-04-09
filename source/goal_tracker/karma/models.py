@@ -102,6 +102,9 @@ class Tag(models.Model):
 	tag_name = models.CharField(max_length=50)
 	goals = models.IntegerField(default=0)
 
+	def all_goals(self):
+		return TagGoal.objects.all().filter(tag=self)
+
 class Goal(models.Model):
 	goal_title = models.CharField(max_length=200)
 	goal_description = models.CharField(max_length=500)

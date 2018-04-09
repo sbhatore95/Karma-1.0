@@ -2,17 +2,17 @@
 
 {% block content %}
 
-<h1>{{project.project_title}}</h1> </br>
-<p><b> Description : </b>{{project.project_description}}</p> </br>
+<h1>{{project.project_title}}</h1> 
+<p><b> Description : </b>{{project.project_description}}</p> 
 <p><b>Confidentiality :</b>
 {% if project.isPublic %}
 Public
 {% else %}
 Private
 {% endif %}
-</p> </br>
-<p> <b> Created at : </b>{{project.created_at}}</p> </br>
-<p><b>Followers :</b> {{total_followers}}</br></p>
+</p>
+<p> <b> Created at : </b>{{project.created_at}}</p>
+<p><b>Followers :</b> {{total_followers}}</p>
 {% if isFollow %}
 <a href="{% url 'unfollow_project' project.id %}"><button>UnFollow</button></a>
 {% else %}
@@ -27,11 +27,11 @@ Private
 </br>
 
 {% for p in progress %}
-<h3>Progress {{p.id}}</h3><br>
+{{p.created_at}}<br>
 <table class="table">
 	
 <b>{{p.progress_description}}</b><br>
-<a href="{% url 'edit_progress' p.id %}">Edit Progress</a>
+<a href="{% url 'edit_progress' p.id %}">Edit Progress </a>
 <a href="{% url 'commentprogress' p.id %}">Comment on Progress</a></br>
 {% for c in p.comments %}
 <i>{{c.user.user_name}}</i>

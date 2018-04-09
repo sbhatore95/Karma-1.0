@@ -5,7 +5,7 @@
 <table class="table">
 <tr>
 	{% for t in tag_list %}
-<td>{{t.tag_name}}</td></br>
+<td><a href="{% url 'tag_detail' t.id %}">{{t.tag_name}}</a></td></br>
 </tr>
 {% endfor %}
 </table>

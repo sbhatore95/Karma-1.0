@@ -81,7 +81,10 @@ def create_goal(request):
 				qs = Tag.objects.filter(tag_name=tag)
 				if qs.exists():
 					#increment goal counter
-					continue
+					tg = TagGoal()
+					tg.goal = goal
+					tg.tag = qs[0]
+					tg.save()
 				else:
 					t = Tag()
 					t.tag_name = tag
@@ -236,6 +239,7 @@ def register(request):
 			password = form.cleaned_data['password']
 			user.set_password(password)
 			user.save()
+			login(request, user)
 			return redirect('index')
 		else:
 			print form.errors, len(form.errors)
@@ -338,3 +342,9 @@ def unfollow_project(request, project_id):
 	a = ProjectFollowing.objects.all().filter(user=request.user, project=project)[0]
 	a.delete()
 	return redirect(project_detail, project_id)
+
+def tag_detail(request, tag_id):
+	tag = Tag.objects.all().filter(id=tag_id)[0]
+	goalss = tag.all_goals()
+	print goalss
+	return render(request, 'tagdetail.html', {'tag': tag, 'goalss':goalss,'is_authenticated': request.user.is_authenticated})

@@ -1,0 +1,12 @@
+{% extends 'blank.html' %}
+
+{% block content %}
+
+<h2>{{tag.tag_name}}</h2>
+
+
+{% for tg in goalss %}
+<a href="{% url 'goal_detail' tg.goal.id %}">{{tg.goal.goal_title}}</a></br>
+{% endfor %}
+
+{% endblock %}
