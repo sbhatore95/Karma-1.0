@@ -1,14 +1,35 @@
 {% extends 'blank.html' %}
 
 {% block content %}
+<h1>Create Project</h1>
+<hr>
 
-
-<form method="post">
-    {% csrf_token %}
-    <table>
-    	{{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
-</form>
+<form class="form-horizontal" method="post">
+	{% csrf_token %}
+    <div class="form-group">
+      <label class="control-label col-sm-2">Goal Title</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" placeholder="Enter title" name="goal_title">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Description</label>
+      <div class="col-sm-10">          
+        <textarea class="form-control" name="goal_description" placeholder="Enter goal Description here"></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Tags</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" placeholder="Enter tags" name="taglist">
+      </div>
+    </div>
+    
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+      	<button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+      </div>
+    </div>
+  </form>
 
 {% endblock %}

@@ -12,6 +12,28 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
+from models import Document
+from forms import DocumentForm
+
+
+def simple_upload(request):
+	if request.method == 'POST' and request.FILES['myfile']:
+		myfile = request.FILES['myfile']
+		fs = FileSystemStorage()
+		filename = fs.save(myfile.name, myfile)
+		print myfile.name
+		uploaded_file_url = fs.url(filename)
+		return render(request, 'simple_upload.html', {
+			'uploaded_file_url': uploaded_file_url
+		})
+	return render(request, 'simple_upload.html')
+
+
+
 
 def anonymous_required( view_function, redirect_to = '/karma/index' ):
 	return AnonymousRequired( view_function, redirect_to )
@@ -194,7 +216,7 @@ def edit_progress(request, progress_id):
 
 
 def view_goals(request):
-	tmpl_vars = {'goal_list': Goal.objects.all(), 'is_authenticated': request.user.is_authenticated}
+	tmpl_vars = {'goal_list': Goal.objects.all(),'tag_list':Tag.objects.all(), 'is_authenticated': request.user.is_authenticated}
 	return render(request, 'goals.html', tmpl_vars)
 
 def goal_detail(request, goal_id):
