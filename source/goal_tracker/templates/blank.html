@@ -36,16 +36,30 @@
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="{% url 'create_project' %}">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Create Project</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right">
+          <a class="nav-link" href="{% url 'view_goals' %}"><span class="nav-link-text">
+            <i class="fa fa-fw fa-dashboard"></i>
+          View all Goals</span></a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right">
+          
+          <a class="nav-link" href="{% url 'create_goal' %}">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">
+          Create Goal
+          </span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="{% url 'myprojects' %}">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">My Projects</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="{% url 'create_project' %}">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Create Project</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -69,18 +83,18 @@
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+          <!--<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Goal</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+          </a>-->
+          <!--<ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
               <a href="{% url 'create_goal' %}">Create Goal</a>
             </li>
             <li>
               <a href="{% url 'view_goals' %}">View all Goals</a>
             </li>
-          </ul>
+          </ul>-->
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
           <a class="nav-link" href="{% url 'view_tags' %}">

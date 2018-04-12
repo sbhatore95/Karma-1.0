@@ -10,6 +10,7 @@
       <div class="card-body">
         <h1 class="card-title mb-1">{{project.project_title}}</h1>
         <br>
+        <h2>Goal : {{project.goal}}</h2>
         <h4><b>Description : </b>{{project.project_description}}</h4>
         <h4><b>Confidentiality : </b>{% if project.isPublic %}Public{% else %}Private{% endif %}</h4>
         <h4> <b> Created at : </b>{{project.created_at}}</h4>
