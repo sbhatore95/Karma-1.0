@@ -1,8 +1,99 @@
 {% extends 'blank.html' %}
 
 {% block content %}
+<div class="row">
+  <div class="col-sm-7">
+  	<div class="card mb-3">
+      <a href="#">
+        <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=610" alt="">
+      </a>
+      <div class="card-body">
+        <h1 class="card-title mb-1">{{project.project_title}}</h1>
+        <br>
+        <h4><b>Description : </b>{{project.project_description}}</h4>
+        <h4><b>Confidentiality : </b>{% if project.isPublic %}Public{% else %}Private{% endif %}</h4>
+        <h4> <b> Created at : </b>{{project.created_at}}</h4>
+        <h4><b>Followers :</b> {{total_followers}}</h4>
+        {% if isFollow %}
+        <a href="{% url 'unfollow_project' project.id %}"><button>UnFollow</button></a>
+        {% else %}
+        <a href="{% url 'follow_project' project.id %}"><button>Follow</button></a>
+        {% endif %}</br></br>
+        
+      </div>
+      <hr class="my-0">
+      <div class="card-body py-2 medium ">
+        <b><a href="{% url 'add_progress' project.id %}">Add Progress </a>&nbsp &nbsp &nbsp
+        <a href="{% url 'edit_project' project.id %}">Edit Project</a></b>
+        
+      </div>
+      
 
-<h1>{{project.project_title}}</h1> 
+      
+      
+      <div class="card-body small bg-faded">
+      	{% for p in progress %}
+        <div class="media">
+          <img class="d-flex mr-3" src="http://placehold.it/45x45" alt="">
+          
+          
+          <div class="media-body">
+            <h3 class="mt-0 mb-1"><a href="#">{{p.progress_description}}</a></h3>
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a href="#">Like</a>
+              </li>
+              <li class="list-inline-item">·</li>
+              <li class="list-inline-item">
+                <a href="#">Edit Progress</a>
+              </li>
+            </ul>
+            {% for c in p.comments %}
+            <div class="media mt-3">
+              <a class="d-flex pr-3" href="#">
+                <img src="http://placehold.it/30x30" alt="">
+              </a>
+              <div class="media-body">
+                <h4 class="mt-0 mb-1"><a href="#">{{c.user.user_name}}</a></h4>{{c.content}}
+                
+              </div>
+            
+            </div>
+        {% endfor %}
+          </div>
+        </div>
+       <hr>
+      {% endfor %}
+      </div>
+      <!--<div class="card-footer small text-muted">Posted 32 mins ago</div>-->
+    </div>
+  </div>
+  <div class="col-sm-5">
+  	<h1> Comments </h1>
+  	<div class="card mb-3">
+  		<div class="media-body">
+  		{% for c in comments %}
+  		<div class="media mt-3">
+              <a class="d-flex pr-3" href="#">
+                <img src="http://placehold.it/30x30" alt="">
+              </a>
+              <div class="media-body">
+                <h4 class="mt-0 mb-1"><a href="#">{{c.user.user_name}}</a></h4>{{c.content}}
+                
+              </div>
+        </div>   
+        {% endfor %}        
+        </div>
+
+  	</div>
+    <a href="{% url 'commentproject' project.id %}">Comment</a>
+  </div>
+</div>
+
+
+
+
+<!--<h1>{{project.project_title}}</h1> 
 <p><b> Description : </b>{{project.project_description}}</p> 
 <p><b>Confidentiality :</b>
 {% if project.isPublic %}
@@ -40,17 +131,20 @@ Private
 {% endfor %}
 </br></br>
 </table>
-{% endfor %}
+{% endfor %}-->
 
 
 
 
-<h1> Comments </h1>
+<!--<h1> Comments </h1>
 {% for c in comments %}
 <i>{{c.user.user_name}}</i>
 {{c.content}}</br>
 {% endfor %}
 
-<a href="{% url 'commentproject' project.id %}">Comment</a>
+<a href="{% url 'commentproject' project.id %}">Comment</a>-->
 
 {% endblock %}
+
+
+

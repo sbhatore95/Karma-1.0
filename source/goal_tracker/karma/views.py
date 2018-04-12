@@ -12,7 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
- 
+
 def anonymous_required( view_function, redirect_to = '/karma/index' ):
 	return AnonymousRequired( view_function, redirect_to )
  
@@ -133,7 +133,7 @@ def create_project(request):
 			project = form.save(commit=False)
 			project.user = request.user
 			project.save()
-			return redirect('index')
+			return redirect('http://127.0.0.1:8000/karma/project/' + str(project.id))
 	else:
 		form = CreateProjectForm()
 
@@ -155,7 +155,7 @@ def edit_project(request, project_id):
 	else:
 		form = EditProjectForm()
 
-	return render(request, 'create_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
+	return render(request, 'edit_project.html', {'form': form, 'is_authenticated': request.user.is_authenticated})
 
 @login_required(login_url='/karma/login/')
 def add_progress(request, project_id):

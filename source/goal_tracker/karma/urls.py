@@ -28,4 +28,5 @@ urlpatterns = [
     url('add_progress/(?P<project_id>\d+)/$', views.add_progress, name='add_progress'),
     url('edit_progress/(?P<progress_id>\d+)/$', views.edit_progress, name='edit_progress'),
     url('tag_detail/(?P<tag_id>\d+)/$', views.tag_detail, name='tag_detail'),
+   
 ]

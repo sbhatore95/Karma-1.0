@@ -1,6 +1,52 @@
 {% extends 'blank.html' %}
 
 {% block content %}
+
+
+
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Profile Pic-->
+          <a href="#">
+            <img  src="https://unsplash.it/700/450?image=610" alt="">
+          </a>
+          <div class="card-body">
+            <hr>
+            Name : {{user.user_name}}
+            <hr>
+            Gender : {{user.gender}}
+            <hr>
+            Birth Date : 01-01-11
+            <hr>
+            Email : {{user.email}}
+            <hr>
+            Bio : {{ user.bio }}
+          </div>
+          <hr class="my-0">
+        </div>
+        <div>
+          <div  style="border: 25px ;padding-top: 75px;margin: 15px;">
+            Followers
+            <hr>
+            Following
+            <hr>
+          </div>
+          <div  style="border: 25px ;padding-top: 120px;margin: 15px;">
+            <!-- Example Pie Chart Card-->
+            Projects Completed
+            <hr>
+            Projects In Progress
+            <hr>
+            Projects Dropped
+            <hr>
+          </div>
+          <div>
+            <button type="button" style="border: 125px ;padding: 50px;margin: 115px;" >Edit Profile</button >
+          </div>         
+
+
+        </div>
+      </div>
 <h1>Profile</h1>
 <table class="table">
 	<tr>

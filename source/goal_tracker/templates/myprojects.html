@@ -3,6 +3,34 @@
 {% block content %}
 <h1>My Projects</h1>
 
+<div class="mb-0 mt-4">
+            <i class="fa fa-newspaper-o"></i> Projects</div>
+          <hr class="mt-2">
+
+          <div class="card-columns">
+            <!-- Example Social Card-->
+			{% for p in projects %}
+            <div class="card mb-3">
+              <div>
+                <br>
+                <h2 class="card-title mb-1"><a href="{% url 'project_detail' p.id %}">{{p.project_title}}</a></h2>
+                <h3 class="card-title mb-1"><a href="#">{{p.goal}}</a></h3>
+                <br>
+              </div>
+
+              <a href="#">
+                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=610" alt="">
+              </a>
+              
+
+              <div class="card-footer small text-muted">Posted 32 mins ago</div>
+            </div>
+ 			{% endfor %}           
+
+          </div>
+
+
+
 <div class = 'container'>
 	<table class = "table">
 		<tr>

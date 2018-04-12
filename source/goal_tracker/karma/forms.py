@@ -1,3 +1,4 @@
+
 # accounts.forms.py
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -5,6 +6,10 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import *
 
 from django.contrib.auth import authenticate
+
+
+
+
 
 class CommentOnGoalForm(forms.ModelForm):
 

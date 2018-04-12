@@ -11,6 +11,7 @@ from datetime import datetime
 # Create your models here.
 
 
+
 #FUTURE BUG = Solve date issue http://paltman.com/a-default-bug-in-django/
 
 class UserManager(BaseUserManager):
