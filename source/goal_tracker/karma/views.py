@@ -141,7 +141,7 @@ def create_project(request):
 
 @login_required(login_url='/karma/login/')
 def edit_project(request, project_id):
-	project = Project.objects.all().filter(id=project_id)[0]
+	project = Project.objects.all().filter(id=project_id)[0]	
 	if request.user != project.user:
 		raise Exception("AuthenticationError")
 
