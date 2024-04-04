@@ -1,5 +1,7 @@
 # Karma
-Team 9 : Online Goal Tracking System : A Software Engineering course project for Spring '18
+Team 9 :
+
+Online Goal Tracking System : A Software Engineering course project for Spring '18.
 
 ## Team Members
 1. Akshay Kolge
@@ -7,3 +9,5 @@ Team 9 : Online Goal Tracking System : A Software Engineering course project for
 3. Ramkrishna Maheta
 4. Sanket Markan
 5. Siddharth Bhatore
+
+Instructor of the Software Engineering course: Mr. Reddy.
