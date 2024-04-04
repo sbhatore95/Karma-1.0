@@ -1,6 +1,5 @@
-Contains the minutes of meeting for TEAM 9.
+# Minutes of Meeting
 
-2018
-Advisor: Sangam Reddy
+Venue: SERC Conference room and phD room.
 Used "Django" for the web development.
 product: a web application at localhost.
